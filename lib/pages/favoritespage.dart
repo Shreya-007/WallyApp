@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:wallyapp/config/config.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-//import 'package:flutter/material.dart';
+import 'package:wallyapp/pages/wallpaper_view_screen.dart';
 
 class FavoritesPage extends StatefulWidget {
   @override
@@ -11,136 +13,147 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Favorites"),
-      ),
-      body: Center(
-        child: Text("Favorites Page Content"),
-      ),
-    );
-  }
-}
+  //  var images = [
 
+  //   "https://images.pexels.com/photos/3326103/pexels-photo-3326103.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+  //   "https://images.pexels.com/photos/3381028/pexels-photo-3381028.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  //   "https://images.pexels.com/photos/775483/pexels-photo-775483.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  //   "https://images.pexels.com/photos/2085376/pexels-photo-2085376.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  //   "https://images.pexels.com/photos/1927314/pexels-photo-1927314.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+  //   "https://images.pexels.com/photos/3377538/pexels-photo-3377538.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  //   "https://images.pexels.com/photos/3389722/pexels-photo-3389722.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+  // ];
 
-class SignInScreen extends StatelessWidget {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final  _db = FirebaseFirestore.instance;
 
-  Future<void> _signIn(BuildContext context) async {
-    try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        // User cancelled the sign-in process
-        return;
-      }
+  User? user;
 
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+  @override
+  void initState() {
+    _getUser();
+    super.initState();
+  }
 
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      UserCredential userCredential = await _auth.signInWithCredential(credential);
-      User user = userCredential.user!;
-
-      await _db.collection("users").doc(user.uid).set({
-        "displayName": user.displayName,
-        "email": user.email,
-        "uid": user.uid,
-        "photoUrl": user.photoURL,
-        "lastSignIn": DateTime.now(),
-      }, SetOptions(merge: true));
-
-      // Navigate to the next screen after successful sign-in (Replace with your screen)
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => NextScreen()),
-      );
-    } catch (e) {
-      print("Error during sign-in: $e");
-      // Handle sign-in error (e.g., show an error message)
-    }
+  void _getUser() async {
+    User? u = await _auth.currentUser;
+    setState(() {
+      user = u;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/bg.jpg"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              top: 200,
-              width: MediaQuery.of(context).size.width,
-              child: Image(
-                image: AssetImage("assets/logo_circle.png"),
-                width: 200,
-                height: 200,
+    return SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 20,
               ),
-            ),
-            Positioned(
-              bottom: 60,
-              left: 0,
-              right: 0,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: InkWell(
-                  onTap: () => _signIn(context),
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [primaryColor, secondaryColor],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Google Sign In",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+
+              Container(
+                alignment: Alignment.topLeft,
+                margin: EdgeInsets.only(
+                  top: 5,
+                  left: 20,
+                  bottom: 20,
+                ),
+                child: Text(
+                  "Favorites",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
-    );
+
+              // StaggeredGridView.countBuilder(
+              //   crossAxisCount: 2,
+              //   shrinkWrap: true,
+              //   physics: NeverScrollableScrollPhysics(),
+              //   staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+              //   itemCount: images.length,
+              //   mainAxisSpacing: 20,
+              //   crossAxisSpacing: 20,
+              //   padding: EdgeInsets.symmetric(horizontal: 15,),
+              //   itemBuilder: (ctx, index) {
+              //     return ClipRRect(
+              //       borderRadius: BorderRadius.circular(10),
+              //                     child: Image(
+              //         image: NetworkImage(images[index]),
+              //       ),
+              //     );
+              //   },
+              // ),
+
+              if (user != null) ...[
+                StreamBuilder(
+                  stream: _db
+                      .collection("users")
+                      .doc(user?.uid)
+                      .collection("favorites")
+                      .orderBy("date", descending: true)
+                      .snapshots(),
+                  builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasData) {
+                      // return StaggeredGridView.countBuilder(
+                      //   crossAxisCount: 2,
+                      //   shrinkWrap: true,
+                      //   physics: NeverScrollableScrollPhysics(),
+                      //   staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+                      //   itemCount: snapshot.data.docs.length,
+                      //   mainAxisSpacing: 20,
+                      //   crossAxisSpacing: 20,
+                      //   padding: EdgeInsets.symmetric(
+                      //     horizontal: 15,
+                      //   ),
+                      //   itemBuilder: (ctx, index) {
+                      //     return InkWell(
+                      //       onTap: () {
+                      //         Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //                 builder: (context) => WallpaperViewPage(
+                      //                       data: snapshot.data.docs[index],
+                      //                     )));
+                      //       },
+                      //       child: Hero(
+                      //         tag: snapshot.data.docs[index].data["url"],
+                      //         child: ClipRRect(
+                      //           borderRadius: BorderRadius.circular(10),
+                      //           // child: Image(
+                      //           //   image: NetworkImage(images[index]),
+                      //           // ),
+                      //           child: CachedNetworkImage(
+                      //             placeholder: (ctx, url) => Image(
+                      //               image: AssetImage("assets/placeholder.jpg"),
+                      //             ),
+                      //             imageUrl:
+                      //                 snapshot.data.docs[index].data["url"],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     );
+                      //   },
+                      // );
+                    }
+                    return SpinKitChasingDots(
+                      color: primaryColor,
+                      size: 50,
+                    );
+                  },
+                ),
+              ],
+
+              SizedBox(
+                height: 80,
+              ),
+            ],
+          ),
+        ));
   }
 }
 
-// Replace NextScreen with the actual screen you want to navigate to after sign-in
-class NextScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Next Screen"),
-      ),
-      body: Center(
-        child: Text("Welcome!"),
-      ),
-    );
-  }
-}

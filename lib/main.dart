@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:wallyapp/config/config.dart';
 import 'package:wallyapp/pages/homepage.dart';
 import 'package:wallyapp/pages/signin_screen.dart';
-
+//import 'package:wallyapp/pages/chat_screen.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -26,7 +26,8 @@ class App extends StatelessWidget {
       theme: ThemeData(
           brightness: Brightness.dark,
           primaryColor: primaryColor,
-          fontFamily: "productsans"),
+          fontFamily: "productsans",
+      ),
     );
   }
 }

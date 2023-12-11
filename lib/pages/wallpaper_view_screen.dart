@@ -1,10 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
-//import 'package:share/share.dart';
+ import 'package:cached_network_image/cached_network_image.dart';
+ import 'package:cloud_firestore/cloud_firestore.dart';
+ import 'package:firebase_auth/firebase_auth.dart';
+ //import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+ import 'package:flutter/material.dart';
+ import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+ //import 'package:share/share.dart';
 import 'package:wallyapp/config/config.dart';
 class WallpaperViewPage extends StatefulWidget {
   final DocumentSnapshot? data; // Make the data parameter nullable

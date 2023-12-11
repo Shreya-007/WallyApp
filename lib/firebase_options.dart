@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,21 +43,47 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDL7vIFY0qYWpP8v8ugoJdNMKdgkTvYtMU',
+    appId: '1:1091481839862:web:400db599da6174833924d7',
+    messagingSenderId: '1091481839862',
+    projectId: 'wallyapp-34964',
+    authDomain: 'wallyapp-34964.firebaseapp.com',
+    databaseURL: 'https://wallyapp-34964-default-rtdb.firebaseio.com',
+    storageBucket: 'wallyapp-34964.appspot.com',
+    measurementId: 'G-N3B0EBGLW6',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA10A-JbnTaS0On0Lf5bnl0jBASqOCgnrY',
-    appId: '1:792931015701:android:4c9b218503e90c3989021c',
-    messagingSenderId: '792931015701',
-    projectId: 'wallyapp-1a7e4',
-    storageBucket: 'wallyapp-1a7e4.appspot.com',
+    apiKey: 'AIzaSyCO99h3HK1geDxCSs_a_piOdp4nEtRs6Ug',
+    appId: '1:1091481839862:android:07dd228f9def4efe3924d7',
+    messagingSenderId: '1091481839862',
+    projectId: 'wallyapp-34964',
+    databaseURL: 'https://wallyapp-34964-default-rtdb.firebaseio.com',
+    storageBucket: 'wallyapp-34964.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA1RjE7VMig0IjtJV1jc0dHtnGsPYvvMaI',
-    appId: '1:792931015701:ios:00fa660222c4f86a89021c',
-    messagingSenderId: '792931015701',
-    projectId: 'wallyapp-1a7e4',
-    storageBucket: 'wallyapp-1a7e4.appspot.com',
-    iosClientId: '792931015701-m0crsg770cgrgg60vmks931v24b9t3s9.apps.googleusercontent.com',
+    apiKey: 'AIzaSyD_YvsudHSEeAAsGZleeHQ62ezEkGFIfCc',
+    appId: '1:1091481839862:ios:7971bfe7c026a70c3924d7',
+    messagingSenderId: '1091481839862',
+    projectId: 'wallyapp-34964',
+    databaseURL: 'https://wallyapp-34964-default-rtdb.firebaseio.com',
+    storageBucket: 'wallyapp-34964.appspot.com',
+    androidClientId: '1091481839862-cgmoqjeu0deeetc1cb2o806kfgl53kio.apps.googleusercontent.com',
+    iosClientId: '1091481839862-87ps8qlros6ikolm0auo869gc4uo6fqj.apps.googleusercontent.com',
+    iosBundleId: 'com.example.wallyapp',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyD_YvsudHSEeAAsGZleeHQ62ezEkGFIfCc',
+    appId: '1:1091481839862:ios:7971bfe7c026a70c3924d7',
+    messagingSenderId: '1091481839862',
+    projectId: 'wallyapp-34964',
+    databaseURL: 'https://wallyapp-34964-default-rtdb.firebaseio.com',
+    storageBucket: 'wallyapp-34964.appspot.com',
+    androidClientId: '1091481839862-cgmoqjeu0deeetc1cb2o806kfgl53kio.apps.googleusercontent.com',
+    iosClientId: '1091481839862-87ps8qlros6ikolm0auo869gc4uo6fqj.apps.googleusercontent.com',
     iosBundleId: 'com.example.wallyapp',
   );
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wallyapp/pages/accountpage.dart';
 import 'package:wallyapp/pages/explorepage.dart';
-import 'package:wallyapp/pages/favoritespage.dart';  // Import the FavoritesPage class
+import 'package:wallyapp/pages/favoritespage.dart';
+
+import 'chat_module/chat.dart';  // Import the FavoritesPage class
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,7 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedPageIndex = 0;
 
-  var _pages = [ExplorePage(), FavoritesPage(), AccountPage()];  // Include FavoritesPage in the list
+  var _pages = [ExplorePage(), FavoritesPage(), AccountPage() , ChatScreen()];  // Include FavoritesPage in the list
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,11 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.person_outline),
             label: "Account",
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble_outline),
+            label: "Chat",
+          ),
+
         ],
         currentIndex: _selectedPageIndex,
         onTap: (index) {
