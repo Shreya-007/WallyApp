@@ -92,8 +92,6 @@ class _AccountPageState extends State<AccountPage> {
             StreamBuilder(
               stream: _db
                   .collection("wallpapers")
-                  .where("uploaded_by", isEqualTo: _user!.uid)
-                  .orderBy("date", descending: true)
                   .snapshots(),
               builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasData) {
@@ -122,7 +120,7 @@ class _AccountPageState extends State<AccountPage> {
                           child: Stack(
                             children: <Widget>[
                               Image.network(
-                                snapshot.data!.docs[index].get("url"),
+                                snapshot.data!.docs[index].get("wallpaperUrl"),
                                 fit: BoxFit.cover,
                               ),
                               IconButton(

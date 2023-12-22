@@ -12,7 +12,7 @@
 // }
 //
 // class _AddWallpaperScreenState extends State<AddWallpaperScreen> {
-//   File _image;
+//   late File _image ;
 //   final ImageLabeler labeler = FirebaseVision.instance.imageLabeler();
 //   List<String> labelsInString = [];
 //   final Firestore _db = Firestore.instance;
@@ -56,11 +56,9 @@
 //       User user = await _auth.currentUser();
 //       String uid = user.uid;
 //
-//       StorageReference storageReference = _storage.ref().child("wallpapers").child(uid).child(fileName);
-//       StorageUploadTask uploadTask = storageReference.putFile(_image);
-//
-//       await uploadTask.onComplete;
-//       String url = await storageReference.getDownloadURL();
+//       UploadTask task = storageReference.putFile(_image);
+//       TaskSnapshot taskSnapshot = await task.whenComplete(() {});
+//       String url = await taskSnapshot.ref.getDownloadURL();
 //
 //       _db.collection("wallpapers").add({
 //         "url": url,
@@ -71,7 +69,7 @@
 //
 //       Navigator.of(context).pop();
 //     } catch (e) {
-//       print("Error uploading image: $e");
+//   print("Error uploading image: $e");
 //
 //       showDialog(
 //         context: context,
