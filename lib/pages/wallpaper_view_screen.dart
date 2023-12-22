@@ -21,7 +21,7 @@ class _WallpaperViewPageState extends State<WallpaperViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<dynamic>? tags = widget.data?["tags"]?.toList();
+    // List<dynamic>? tags = widget.data?["tags"]?.toList();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -31,28 +31,30 @@ class _WallpaperViewPageState extends State<WallpaperViewPage> {
             children: <Widget>[
               Container(
                 child: Hero(
-                  tag: widget.data?["url"] ?? "defaultTag", // Use a default tag if url is null
+                  tag: widget.data?["wallpaperUrl"] ?? "defaultTag", // Use a default tag if url is null
                   child: CachedNetworkImage(
                     placeholder: (ctx, url) => Image(
                       image: AssetImage("assets/placeholder.jpg"),
                     ),
-                    imageUrl: widget.data?["url"] ?? "", // Provide a default empty string if url is null
+                    imageUrl: widget.data?["wallpaperUrl"] ?? "",
+                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
+
                 ),
               ),
-              if (tags != null)
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  child: Wrap(
-                    runSpacing: 10,
-                    spacing: 10,
-                    children: tags.map((tag) {
-                      return Chip(
-                        label: Text(tag ?? ""), // Provide a default empty string if tag is null
-                      );
-                    }).toList(),
-                  ),
-                ),
+              // if (tags != null)
+              //   Container(
+              //     margin: EdgeInsets.only(top: 20),
+              //     child: Wrap(
+              //       runSpacing: 10,
+              //       spacing: 10,
+              //       children: tags.map((tag) {
+              //         return Chip(
+              //           label: Text(tag ?? ""), // Provide a default empty string if tag is null
+              //         );
+              //       }).toList(),
+              //     ),
+              //   ),
               Container(
                 margin: EdgeInsets.only(top: 20),
                 child: Wrap(

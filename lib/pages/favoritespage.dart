@@ -14,7 +14,7 @@ class FavoritesPage extends StatefulWidget {
 
 class _FavoritesPageState extends State<FavoritesPage> {
   //  var images = [
-
+  //
   //   "https://images.pexels.com/photos/3326103/pexels-photo-3326103.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
   //   "https://images.pexels.com/photos/3381028/pexels-photo-3381028.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
   //   "https://images.pexels.com/photos/775483/pexels-photo-775483.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
@@ -72,12 +72,12 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
               // StaggeredGridView.countBuilder(
               //   crossAxisCount: 2,
-              //   shrinkWrap: true,
-              //   physics: NeverScrollableScrollPhysics(),
-              //   staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-              //   itemCount: images.length,
-              //   mainAxisSpacing: 20,
-              //   crossAxisSpacing: 20,
+              //   // shrinkWrap: true,
+              //   // physics: NeverScrollableScrollPhysics(),
+              //   // staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+              //    itemCount: images.length,
+              //   // mainAxisSpacing: 20,
+              //   // crossAxisSpacing: 20,
               //   padding: EdgeInsets.symmetric(horizontal: 15,),
               //   itemBuilder: (ctx, index) {
               //     return ClipRRect(
@@ -95,50 +95,50 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       .collection("users")
                       .doc(user?.uid)
                       .collection("favorites")
-                      .orderBy("date", descending: true)
                       .snapshots(),
                   builder: (ctx, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasData) {
-                      // return StaggeredGridView.countBuilder(
-                      //   crossAxisCount: 2,
-                      //   shrinkWrap: true,
-                      //   physics: NeverScrollableScrollPhysics(),
-                      //   staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-                      //   itemCount: snapshot.data.docs.length,
-                      //   mainAxisSpacing: 20,
-                      //   crossAxisSpacing: 20,
-                      //   padding: EdgeInsets.symmetric(
-                      //     horizontal: 15,
-                      //   ),
-                      //   itemBuilder: (ctx, index) {
-                      //     return InkWell(
-                      //       onTap: () {
-                      //         Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //                 builder: (context) => WallpaperViewPage(
-                      //                       data: snapshot.data.docs[index],
-                      //                     )));
-                      //       },
-                      //       child: Hero(
-                      //         tag: snapshot.data.docs[index].data["url"],
-                      //         child: ClipRRect(
-                      //           borderRadius: BorderRadius.circular(10),
-                      //           // child: Image(
-                      //           //   image: NetworkImage(images[index]),
-                      //           // ),
-                      //           child: CachedNetworkImage(
-                      //             placeholder: (ctx, url) => Image(
-                      //               image: AssetImage("assets/placeholder.jpg"),
-                      //             ),
-                      //             imageUrl:
-                      //                 snapshot.data.docs[index].data["url"],
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     );
-                      //   },
-                      // );
+                      return StaggeredGridView.countBuilder(
+                        crossAxisCount: 2,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+                        itemCount: snapshot.data!.docs.length,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 15,
+                        ),
+                        itemBuilder: (ctx, index) {
+                          //var wallpaperUrl = snapshot.data!.docs[index].get("wallpaperUrl");
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => WallpaperViewPage(
+                                            data: snapshot.data!.docs[index],
+                                          )));
+                            },
+                            child: Hero(
+                              tag: snapshot.data!.docs[index].get("wallpaperUrl"),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                // child: Image(
+                                //   image: NetworkImage(images[index]),
+                                // ),
+                                child: CachedNetworkImage(
+                                  placeholder: (ctx, url) => Image(
+                                    image: AssetImage("assets/placeholder.jpg"),
+                                  ),
+                                  imageUrl:
+                                      snapshot.data!.docs[index].get("wallpaperUrl"),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
                     }
                     return SpinKitChasingDots(
                       color: primaryColor,
