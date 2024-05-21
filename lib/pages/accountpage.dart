@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:wallyapp/config/config.dart';
 import 'package:wallyapp/pages/wallpaper_view_screen.dart';
+//import 'add_wallpaper_screen.dart';
+
+
 
 class AccountPage extends StatefulWidget {
   @override
